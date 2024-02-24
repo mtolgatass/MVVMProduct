@@ -9,16 +9,14 @@ import UIKit
 import SnapKit
 
 protocol ProductListUIElementsProvider {
-    var stateClosure: ((ObservationType<ProductListUIElementsProviderImpl.UserActivity, Error>) -> ())? { get set }
     var tableView: UITableView { get }
     var productCountLabel: UILabel { get }
+    var searchBar: UISearchBar { get }
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
 }
 
 final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsProvider {
-    var stateClosure: ((ObservationType<UserActivity, Error>) -> ())?
-    
     private var containerStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -54,6 +52,12 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
         return view
     }()
     
+    var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Ürün Ara"
+        return searchBar
+    }()
+    
     var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
@@ -65,6 +69,7 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
     func addSubviews(targetView: UIView) {
         targetView.addSubview(containerStack)
         containerStack.addArrangedSubview(labelContainerStack)
+        containerStack.addArrangedSubview(searchBar)
         containerStack.addArrangedSubview(tableView)
         
         labelContainerStack.addArrangedSubview(productsLabel)
@@ -80,16 +85,12 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
             make.bottom.equalTo(targetView.safeAreaLayoutGuide.snp.bottom)
         }
         
-        tableView.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.92)
+        searchBar.snp.makeConstraints { make in
+            make.height.equalToSuperview().multipliedBy(0.1)
         }
-    }
-}
-
-// MARK: - UserActivity Enum
-extension ProductListUIElementsProviderImpl {
-    enum UserActivity {
-        case search(_ query: String)
-        case productSelected(_ product: Product)
+        
+        tableView.snp.makeConstraints { make in
+            make.height.equalToSuperview().multipliedBy(0.85)
+        }
     }
 }

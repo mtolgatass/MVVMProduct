@@ -14,7 +14,7 @@ enum Endpoint {
 
 enum EndpointParameters: String {
     case limit
-    case query
+    case query = "q"
 }
 
 enum HTTPMethod: String {

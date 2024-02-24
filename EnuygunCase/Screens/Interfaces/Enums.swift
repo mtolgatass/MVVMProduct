@@ -7,6 +7,6 @@
 
 import Foundation
 
-enum ObservationType<T, E> {
-    case action(data: T? = nil), error(error: E?)
+enum ObservationType<E> {
+    case error(error: E?)
 }

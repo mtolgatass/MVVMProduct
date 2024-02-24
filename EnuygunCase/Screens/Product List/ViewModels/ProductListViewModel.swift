@@ -10,20 +10,26 @@ import RxSwift
 import RxRelay
 
 protocol ProductListViewModel {
-    var stateClosure: ((ObservationType<ProductListViewModelImpl.UserActivity, NetworkError>) -> ())? { get set }
-    var productList: PublishSubject<[Product]> { get }
+    var stateClosure: ((ObservationType<NetworkError>) -> ())? { get set }
+    var productList: BehaviorRelay<[Product]> { get }
+    var initialProductList: BehaviorRelay<[Product]> { get }
     func getProductList()
-    func searchProduct(_ query: String)
+    func searchTextDidChange(_ query: String)
 }
 
 final class ProductListViewModelImpl: ProductListViewModel {
-    var stateClosure: ((ObservationType<ProductListViewModelImpl.UserActivity, NetworkError>) -> ())?
+    var stateClosure: ((ObservationType<NetworkError>) -> ())?
     let productListUseCase: ProductListUseCase
     
-    let productList = PublishSubject<[Product]>()
+    let productList = BehaviorRelay<[Product]>(value: [])
+    let initialProductList = BehaviorRelay<[Product]>(value: [])
+    
+    private let disposeBag = DisposeBag()
+    private let searchThrottle = PublishSubject<String>()
     
     init(productListUseCase: ProductListUseCase) {
         self.productListUseCase = productListUseCase
+        setupSearch()
     }
     
     func getProductList() {
@@ -31,30 +37,47 @@ final class ProductListViewModelImpl: ProductListViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let response):
-                productList.onNext(response.products)
-                productList.onCompleted()
+                let initialList = response.products
+                initialProductList.accept(initialList)
+                productList.accept(initialList)
             case .failure(let error):
                 stateClosure?(.error(error: error))
             }
         }
     }
     
-    func searchProduct(_ query: String) {
+    func searchTextDidChange(_ query: String) {
+        searchThrottle.onNext(query)
+    }
+    
+    private func setupSearch() {
+        searchThrottle
+            .throttle(.milliseconds(1000), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] query in
+                guard let self = self else { return }
+                if query.count < 3 {
+                    self.resetProductList()
+                } else {
+                    self.searchProduct(query)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func searchProduct(_ query: String) {
         productListUseCase.searchProduct(query) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let response):
-                stateClosure?(.action(data: .showSearchResults(response.products)))
+                let searchResults = response.products
+                productList.accept(searchResults)
             case .failure(let error):
                 stateClosure?(.error(error: error))
             }
         }
     }
-}
-
-// MARK: - User Activity Extension
-extension ProductListViewModelImpl {
-    enum UserActivity {
-        case showSearchResults(_ model: [Product])
+    
+    private func resetProductList() {
+        productList.accept(initialProductList.value)
     }
 }
