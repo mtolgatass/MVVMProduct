@@ -17,9 +17,10 @@ class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         title = "Cart"
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -42,49 +43,69 @@ class CartViewController: UIViewController {
         // Cell For Row At
         vm.getCartItems().bind(to: pr.tableView.rx
             .items(cellIdentifier: "CartTableViewCell", cellType: CartTableViewCell.self)) { (row, item, cell) in
-            cell.increaseButton.rx
+                cell.increaseButton.rx
                     .tap
                     .subscribe(onNext: { _ in
-                vm.increaseQuantity(of: item.key)
-            }).disposed(by: cell.bag)
-            
-            cell.decreaseButton.rx
-                .tap
-                .subscribe(onNext: { _ in
-                vm.decreaseQuantity(of: item.key)
-            }).disposed(by: cell.bag)
-            
-            cell.removeButton.rx
-                .tap
-                .subscribe(onNext: { _ in
-                vm.removeCart(item.key)
-            }).disposed(by: cell.bag)
-            
-            cell.configureCell(item.key, item.value)
-        }.disposed(by: bag)
+                        vm.increaseQuantity(of: item.key)
+                    }).disposed(by: cell.bag)
+                
+                cell.decreaseButton.rx
+                    .tap
+                    .subscribe(onNext: { _ in
+                        vm.decreaseQuantity(of: item.key)
+                    }).disposed(by: cell.bag)
+                
+                cell.removeButton.rx
+                    .tap
+                    .subscribe(onNext: { _ in
+                        vm.removeCart(item.key)
+                    }).disposed(by: cell.bag)
+                
+                cell.configureCell(item.key, item.value)
+            }.disposed(by: bag)
         
         // Total Price
         vm.getTotalPrice()
-            .subscribe(onNext: { price in
-            pr.priceLabel.text = "Total Price: \(Int(price))₺"
-        }).disposed(by: bag)
+            .subscribe(onNext: { [weak self] price in
+                guard let self = self else { return }
+                self.checkIfPriceIsZero(price: price)
+                pr.priceLabel.text = "Total Price: \(Int(price))₺"
+            }).disposed(by: bag)
         
         // Total Discount
         vm.getTotalDiscount()
             .subscribe(onNext: { price in
-            pr.discountedPriceLabel.text = "Discount: \(Int(price))₺"
-        }).disposed(by: bag)
+                pr.discountedPriceLabel.text = "Discount: \(Int(price))₺"
+            }).disposed(by: bag)
         
         // Total Final Price
         Observable.combineLatest(vm.getTotalPrice(), vm.getTotalDiscount())
             .subscribe(onNext: { price, discount in
-            pr.totalPriceLabel.text = "Total Price: \(Int(price - discount))₺"
-        }).disposed(by: bag)
+                pr.totalPriceLabel.text = "Total Price: \(Int(price - discount))₺"
+            }).disposed(by: bag)
     }
     
     private func bindUIProvider() {
         guard let pr = pr else { return }
         pr.tableView.rx.setDelegate(self).disposed(by: bag)
+        
+        pr.checkoutButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+                guard let self = self else { return }
+                let checkoutVC = CheckoutBuilderImpl().build()
+                self.navigationController?.pushViewController(checkoutVC, animated: true)
+            }).disposed(by: bag)
+    }
+    
+    private func checkIfPriceIsZero(price: Double) {
+        if price == 0 {
+            pr?.disableCheckoutButton()
+            pr?.hidePriceLabels()
+        } else {
+            pr?.enableCheckoutButton()
+            pr?.showPriceLabels()
+        }
     }
 }
 

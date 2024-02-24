@@ -14,8 +14,13 @@ protocol CartUIElementsProvider {
     var priceLabel: UILabel { get }
     var discountedPriceLabel: UILabel { get }
     var totalPriceLabel: UILabel { get }
+    var checkoutButton: UIButton { get }
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
+    func disableCheckoutButton()
+    func enableCheckoutButton()
+    func hidePriceLabels()
+    func showPriceLabels()
 }
 
 final class CartUIElementsProviderImpl: CartUIElementsProvider {
@@ -74,9 +79,10 @@ final class CartUIElementsProviderImpl: CartUIElementsProvider {
         return label
     }()
     
-    private var checkoutButton: UIButton = {
+    var checkoutButton: UIButton = {
         let button = UIButton()
         button.setTitle("Checkout", for: .normal)
+        button.setTitle("Add Items to Checkout", for: .disabled)
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 8
         return button
@@ -117,5 +123,21 @@ final class CartUIElementsProviderImpl: CartUIElementsProvider {
         checkoutButton.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
+    }
+    
+    func disableCheckoutButton() {
+        checkoutButton.isEnabled = false
+    }
+    
+    func enableCheckoutButton() {
+        checkoutButton.isEnabled = true
+    }
+    
+    func hidePriceLabels() {
+        priceContainerStack.isHidden = true
+    }
+    
+    func showPriceLabels() {
+        priceContainerStack.isHidden = false
     }
 }

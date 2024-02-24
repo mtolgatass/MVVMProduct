@@ -99,4 +99,8 @@ class CartManager {
             return totalDiscount
         }
     }
+    
+    func removeAll() {
+        cartSubject.accept([:])
+    }
 }

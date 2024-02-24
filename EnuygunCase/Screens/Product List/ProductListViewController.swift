@@ -43,7 +43,7 @@ class ProductListViewController: UIViewController {
         guard let pr = pr, let vm = vm else { return }
         vm.productList
             .map { $0.count }
-            .map { "(\($0) adet)" }
+            .map { "(\($0) items)" }
             .bind(to: pr.productCountLabel.rx.text)
             .disposed(by: bag)
         

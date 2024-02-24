@@ -58,26 +58,26 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="IDs-ei-vTk">
                                 <rect key="frame" x="285" y="0.0" width="92" height="82"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MfJ-iJ-7pc">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZhE-Az-iaM">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="82"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nid-el-Avh">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XtT-Gd-u0W">
                                                 <rect key="frame" x="0.0" y="31" width="20" height="20"/>
                                                 <color key="backgroundColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="20" id="9bc-wn-wq4"/>
-                                                    <constraint firstAttribute="height" constant="20" id="D1Y-Cr-rwY"/>
+                                                    <constraint firstAttribute="height" constant="20" id="b4J-de-o0x"/>
+                                                    <constraint firstAttribute="width" constant="20" id="lHl-Vc-Dra"/>
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="+"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="-"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="DNr-wf-nlp"/>
-                                            <constraint firstItem="Nid-el-Avh" firstAttribute="centerY" secondItem="MfJ-iJ-7pc" secondAttribute="centerY" id="bmK-hv-H2n"/>
-                                            <constraint firstItem="Nid-el-Avh" firstAttribute="centerX" secondItem="MfJ-iJ-7pc" secondAttribute="centerX" id="scS-lA-aVE"/>
+                                            <constraint firstItem="XtT-Gd-u0W" firstAttribute="centerX" secondItem="ZhE-Az-iaM" secondAttribute="centerX" id="RCT-Pv-YFj"/>
+                                            <constraint firstAttribute="width" constant="20" id="YrT-ZG-8FM"/>
+                                            <constraint firstItem="XtT-Gd-u0W" firstAttribute="centerY" secondItem="ZhE-Az-iaM" secondAttribute="centerY" id="i4Y-58-A6L"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fo0-pc-wVt">
@@ -97,26 +97,26 @@
                                             <constraint firstAttribute="width" constant="20" id="bzS-3Z-rzJ"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZhE-Az-iaM">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MfJ-iJ-7pc">
                                         <rect key="frame" x="44" y="0.0" width="20" height="82"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XtT-Gd-u0W">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nid-el-Avh">
                                                 <rect key="frame" x="0.0" y="31" width="20" height="20"/>
                                                 <color key="backgroundColor" red="0.4941176471" green="0.4941176471" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="b4J-de-o0x"/>
-                                                    <constraint firstAttribute="width" constant="20" id="lHl-Vc-Dra"/>
+                                                    <constraint firstAttribute="width" constant="20" id="9bc-wn-wq4"/>
+                                                    <constraint firstAttribute="height" constant="20" id="D1Y-Cr-rwY"/>
                                                 </constraints>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="-"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="+"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="XtT-Gd-u0W" firstAttribute="centerX" secondItem="ZhE-Az-iaM" secondAttribute="centerX" id="RCT-Pv-YFj"/>
-                                            <constraint firstAttribute="width" constant="20" id="YrT-ZG-8FM"/>
-                                            <constraint firstItem="XtT-Gd-u0W" firstAttribute="centerY" secondItem="ZhE-Az-iaM" secondAttribute="centerY" id="i4Y-58-A6L"/>
+                                            <constraint firstAttribute="width" constant="20" id="DNr-wf-nlp"/>
+                                            <constraint firstItem="Nid-el-Avh" firstAttribute="centerY" secondItem="MfJ-iJ-7pc" secondAttribute="centerY" id="bmK-hv-H2n"/>
+                                            <constraint firstItem="Nid-el-Avh" firstAttribute="centerX" secondItem="MfJ-iJ-7pc" secondAttribute="centerX" id="scS-lA-aVE"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oo9-vj-BRI">
