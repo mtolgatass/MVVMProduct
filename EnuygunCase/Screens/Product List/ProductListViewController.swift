@@ -15,11 +15,6 @@ class ProductListViewController: UIViewController {
     private var vm: ProductListViewModel?
     private let bag = DisposeBag()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -52,7 +47,8 @@ class ProductListViewController: UIViewController {
         pr.tableView.rx.setDelegate(self).disposed(by: bag)
         
         pr.tableView.rx.modelSelected(Product.self).subscribe(onNext: { item in
-            print(item)
+            let productDetailVC = ProductDetailBuilderImpl().build(product: item)
+            self.present(productDetailVC, animated: true)
         }).disposed(by: bag)
         
         pr.searchBar.rx.text

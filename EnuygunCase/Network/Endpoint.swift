@@ -38,8 +38,8 @@ extension Endpoint: EndpointProtocol {
     
     var parameters: [String : Any]? {
         switch self {
-        case .list: return [EndpointParameters.limit.rawValue: 50]
-        case .search(let query): return [EndpointParameters.limit.rawValue: 50,
+        case .list: return [EndpointParameters.limit.rawValue: 200]
+        case .search(let query): return [EndpointParameters.limit.rawValue: 200,
                                          EndpointParameters.query.rawValue: query]
         }
     }

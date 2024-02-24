@@ -14,9 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let productListBuilder = ProductScreenBuilderImpl()
-        let navigationController = UINavigationController(rootViewController: productListBuilder.build())
-        window?.rootViewController = navigationController
+        let tabbarController = TabBarViewController()
+        window?.rootViewController = tabbarController
         window?.makeKeyAndVisible()
         return true
     }
