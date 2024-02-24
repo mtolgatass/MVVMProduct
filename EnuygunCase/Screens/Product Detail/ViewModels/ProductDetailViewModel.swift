@@ -12,6 +12,7 @@ protocol ProductDetailViewModel {
     var product: Product { get }
     func getProduct() -> Product
     func getFavoriteStatus() -> Bool
+    func addProductToCart()
 }
 
 final class ProductDetailViewModelImpl: ProductDetailViewModel {
@@ -37,5 +38,9 @@ final class ProductDetailViewModelImpl: ProductDetailViewModel {
     
     func getFavoriteStatus() -> Bool {
         return isFavorite
+    }
+    
+    func addProductToCart() {
+        useCase?.addToCart(product)
     }
 }

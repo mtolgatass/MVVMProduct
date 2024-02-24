@@ -33,7 +33,7 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
     
     private var productsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ürünler"
+        label.text = "Products"
         label.font = .boldSystemFont(ofSize: 24)
         label.textAlignment = .left
         return label
@@ -54,7 +54,7 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
     
     var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Ürün Ara"
+        searchBar.placeholder = "Search Product"
         return searchBar
     }()
     

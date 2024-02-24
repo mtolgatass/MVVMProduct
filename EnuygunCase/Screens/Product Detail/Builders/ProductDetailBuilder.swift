@@ -13,8 +13,9 @@ protocol ProductDetailBuilder {
 
 final class ProductDetailBuilderImpl: ProductDetailBuilder {
     func build(product: Product) -> ProductDetailViewController {
-        let userDefaultsManager = UserDefaultsManager.shared
-        let useCase = ProductDetailUseCaseImpl(userDefaultsManager: userDefaultsManager)
+        let favoritesManager = FavoritesManager.shared
+        let cartManager = CartManager.shared
+        let useCase = ProductDetailUseCaseImpl(favoritesManager: favoritesManager, cartManager: cartManager)
         let viewModel = ProductDetailViewModelImpl(useCase: useCase, product: product)
         let uiElementsProvider = ProductDetailUIElementsProviderImpl()
         let viewController = ProductDetailViewController()

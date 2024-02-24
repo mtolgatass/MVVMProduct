@@ -13,8 +13,8 @@ protocol FavoritesBuilder {
 
 final class FavoritesBuilderImpl: FavoritesBuilder {
     func build() -> FavoritesViewController {
-        let userDefaultsManager = UserDefaultsManager.shared
-        let useCase = FavoritesUseCaseImpl(userDefaultsManager: userDefaultsManager)
+        let favoritesManager = FavoritesManager.shared
+        let useCase = FavoritesUseCaseImpl(favoritesManager: favoritesManager)
         let viewModel = FavoritesViewModelImpl(favoritesUseCase: useCase)
         let uiElementsProvider = FavoritesUIElementsProviderImpl()
         let viewController = FavoritesViewController()

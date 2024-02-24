@@ -13,13 +13,13 @@ protocol FavoritesUseCase {
 }
 
 struct FavoritesUseCaseImpl: FavoritesUseCase {
-    let userDefaultsManager: UserDefaultsManager
+    let favoritesManager: FavoritesManager
     
-    init(userDefaultsManager: UserDefaultsManager) {
-        self.userDefaultsManager = userDefaultsManager
+    init(favoritesManager: FavoritesManager) {
+        self.favoritesManager = favoritesManager
     }
     
     func getFavorites() -> Observable<[Product]> {
-        return userDefaultsManager.favoritesObservable()
+        return favoritesManager.favoritesObservable()
     }
 }

@@ -33,6 +33,11 @@ class ProductDetailViewController: UIViewController {
             vm.updateFavorite()
             pr.setFavoriteButton(isFavorite: vm.getFavoriteStatus())
         }.disposed(by: bag)
+        
+        pr.cartButton.rx.tap.bind {
+            vm.addProductToCart()
+            pr.updateCartButton()
+        }.disposed(by: bag)
     }
 }
 extension ProductDetailViewController {

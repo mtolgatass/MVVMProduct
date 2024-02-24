@@ -33,7 +33,14 @@ class TabBarViewController: UITabBarController {
         let favoritesTabBarItem = UITabBarItem(title: "", image: favoritesDeselectedIcon, selectedImage: favoritesSelectedIcon)
         favoritesViewController.tabBarItem = favoritesTabBarItem
         
-        viewControllers = [productListViewController, favoritesViewController]
+        let cartBuilder = CartBuilderImpl()
+        let cartViewController = cartBuilder.build()
+        let cartSelectedIcon = UIImage(named: "CartTabSelectedIcon")?.withRenderingMode(.alwaysOriginal)
+        let cartDeselectedIcon = UIImage(named: "CartTabDeselectedIcon")?.withRenderingMode(.alwaysOriginal)
+        let cartTabBarItem = UITabBarItem(title: "", image: cartDeselectedIcon, selectedImage: cartSelectedIcon)
+        cartViewController.tabBarItem = cartTabBarItem
+        
+        viewControllers = [productListViewController, favoritesViewController, cartViewController]
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {

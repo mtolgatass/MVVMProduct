@@ -11,27 +11,31 @@ protocol ProductDetailUseCase {
     func addFavorite(_ product: Product)
     func removeFavorite(_ product: Product)
     func isFavorite(_ product: Product) -> Bool
-//    func addToCart()
+    func addToCart(_ product: Product)
 }
 
 struct ProductDetailUseCaseImpl: ProductDetailUseCase {
-    let userDefaultsManager: UserDefaultsManager
+    let favoritesManager: FavoritesManager
+    let cartManager: CartManager
     
-    init(userDefaultsManager: UserDefaultsManager) {
-        self.userDefaultsManager = userDefaultsManager
+    init(favoritesManager: FavoritesManager, cartManager: CartManager) {
+        self.favoritesManager = favoritesManager
+        self.cartManager = cartManager
     }
     
     func addFavorite(_ product: Product) {
-        userDefaultsManager.addFavorite(product)
+        favoritesManager.addFavorite(product)
     }
     
     func removeFavorite(_ product: Product) {
-        userDefaultsManager.removeFavorite(product)
+        favoritesManager.removeFavorite(product)
     }
     
     func isFavorite(_ product: Product) -> Bool {
-        return userDefaultsManager.isFavorite(product)
+        return favoritesManager.isFavorite(product)
     }
     
-//    func addToCart() {}
+    func addToCart(_ product: Product) {
+        cartManager.addProduct(product)
+    }
 }

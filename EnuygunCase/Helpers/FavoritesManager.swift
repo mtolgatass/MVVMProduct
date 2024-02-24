@@ -1,5 +1,5 @@
 //
-//  UserDefaultsManager.swift
+//  FavoritesManager.swift
 //  EnuygunCase
 //
 //  Created by Tolga Taş on 24.02.2024.
@@ -8,8 +8,8 @@
 import Foundation
 import RxSwift
 
-class UserDefaultsManager {
-    static let shared = UserDefaultsManager()
+class FavoritesManager {
+    static let shared = FavoritesManager()
     
     private let favoritesKey = "favorites"
     private let favoritesSubject = BehaviorSubject<[Product]>(value: [])

@@ -14,6 +14,7 @@ protocol ProductDetailUIElementsProvider {
     func addConstraints(targetView: UIView)
     func configureUI(product: Product, isFavorite: Bool)
     func setFavoriteButton(isFavorite: Bool)
+    func updateCartButton()
     var favoriteButton: UIButton { get }
     var cartButton: UIButton { get }
 }
@@ -152,7 +153,7 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
             make.bottom.equalTo(targetView.safeAreaLayoutGuide.snp.bottom).inset(16)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().inset(16)
-            make.height.equalToSuperview().multipliedBy(0.05)
+            make.height.equalTo(50)
         }
         
         cartButton.snp.makeConstraints { make in
@@ -178,5 +179,10 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
     
     func setFavoriteButton(isFavorite: Bool) {
         favoriteButton.setImage(UIImage(named: isFavorite ? "favoriteIconFilled" : "favoriteIconEmpty"), for: .normal)
+    }
+    
+    func updateCartButton() {
+        cartButton.setTitle("Added to Cart", for: .normal)
+        cartButton.backgroundColor = .systemGreen
     }
 }
