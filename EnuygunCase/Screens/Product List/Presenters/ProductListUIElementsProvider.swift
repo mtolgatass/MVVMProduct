@@ -12,6 +12,8 @@ protocol ProductListUIElementsProvider {
     var tableView: UITableView { get }
     var productCountLabel: UILabel { get }
     var searchBar: UISearchBar { get }
+    var filterButton: UIButton { get }
+    var sortButton: UIButton { get }
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
 }
@@ -52,10 +54,41 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
         return view
     }()
     
+    private var searchContainerStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 4
+        return stack
+    }()
+    
     var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search Product"
         return searchBar
+    }()
+    
+    var filterButton: UIButton = {
+        var buttonConfiguration = UIButton.Configuration.tinted()
+        let image = UIImage(named: "FilterIcon")
+        buttonConfiguration.image = image
+        let button = UIButton(configuration: buttonConfiguration)
+        button.tintColor = .systemGray
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemGray.cgColor
+        button.layer.cornerRadius = 8
+        return button
+    }()
+    
+    var sortButton: UIButton = {
+        var buttonConfiguration = UIButton.Configuration.tinted()
+        let image = UIImage(named: "SortIcon")
+        buttonConfiguration.image = image
+        let button = UIButton(configuration: buttonConfiguration)
+        button.tintColor = .systemGray
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemGray.cgColor
+        button.layer.cornerRadius = 8
+        return button
     }()
     
     var tableView: UITableView = {
@@ -69,8 +102,12 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
     func addSubviews(targetView: UIView) {
         targetView.addSubview(containerStack)
         containerStack.addArrangedSubview(labelContainerStack)
-        containerStack.addArrangedSubview(searchBar)
+        containerStack.addArrangedSubview(searchContainerStack)
         containerStack.addArrangedSubview(tableView)
+        
+        searchContainerStack.addArrangedSubview(searchBar)
+        searchContainerStack.addArrangedSubview(filterButton)
+        searchContainerStack.addArrangedSubview(sortButton)
         
         labelContainerStack.addArrangedSubview(productsLabel)
         labelContainerStack.addArrangedSubview(productCountLabel)
@@ -85,8 +122,16 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
             make.bottom.equalTo(targetView.safeAreaLayoutGuide.snp.bottom)
         }
         
-        searchBar.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.1)
+        searchContainerStack.snp.makeConstraints { make in
+            make.height.equalTo(40)
+        }
+        
+        filterButton.snp.makeConstraints { make in
+            make.width.equalTo(40)
+        }
+        
+        sortButton.snp.makeConstraints { make in
+            make.width.equalTo(40)
         }
         
         tableView.snp.makeConstraints { make in

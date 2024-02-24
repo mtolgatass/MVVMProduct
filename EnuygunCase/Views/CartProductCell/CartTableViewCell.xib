@@ -129,7 +129,7 @@
                                                     <constraint firstAttribute="height" constant="20" id="ve9-P7-z6Z"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="trashIcon"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="TrashIcon"/>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -185,7 +185,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="trashIcon" width="20" height="20"/>
+        <image name="TrashIcon" width="20" height="20"/>
         <systemColor name="secondarySystemGroupedBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

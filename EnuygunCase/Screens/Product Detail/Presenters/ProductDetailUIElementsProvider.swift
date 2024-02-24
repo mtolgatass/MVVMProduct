@@ -85,7 +85,7 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
     
     var favoriteButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "favoriteIconEmpty"), for: .normal)
+        button.setImage(UIImage(named: "FavoriteIconEmpty"), for: .normal)
         button.backgroundColor = .systemGray
         button.layer.cornerRadius = 8
         return button
@@ -173,12 +173,12 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
         }
         
         if isFavorite {
-            favoriteButton.setImage(UIImage(named: "favoriteIconFilled"), for: .normal)
+            favoriteButton.setImage(UIImage(named: "FavoriteIconFilled"), for: .normal)
         }
     }
     
     func setFavoriteButton(isFavorite: Bool) {
-        favoriteButton.setImage(UIImage(named: isFavorite ? "favoriteIconFilled" : "favoriteIconEmpty"), for: .normal)
+        favoriteButton.setImage(UIImage(named: isFavorite ? "FavoriteIconFilled" : "FavoriteIconEmpty"), for: .normal)
     }
     
     func updateCartButton() {

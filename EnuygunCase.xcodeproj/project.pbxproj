@@ -201,10 +201,10 @@
 		4B0AF3C02B89292100F68A8F /* EnuygunCase */ = {
 			isa = PBXGroup;
 			children = (
-				4B4076CD2B893F1F006B4F4B /* Views */,
-				4B0AF3F22B892A9100F68A8F /* Helpers */,
 				4B0AF3F32B892AA600F68A8F /* Screens */,
 				4B0AF3FB2B892B3200F68A8F /* Network */,
+				4B4076CD2B893F1F006B4F4B /* Views */,
+				4B0AF3F22B892A9100F68A8F /* Helpers */,
 				4B0AF3CC2B89292300F68A8F /* LaunchScreen.storyboard */,
 				4B0AF3CF2B89292300F68A8F /* Info.plist */,
 			);
@@ -244,11 +244,11 @@
 		4B0AF3F32B892AA600F68A8F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				4BA7D9052B8A8A1900676F6F /* Checkout */,
-				4BA7D8F12B8A406D00676F6F /* Cart */,
-				4BA7D8D82B8A1A7600676F6F /* Product Detail */,
 				4B0AF4122B89333300F68A8F /* Product List */,
+				4BA7D8D82B8A1A7600676F6F /* Product Detail */,
+				4BA7D8F12B8A406D00676F6F /* Cart */,
 				4BA7D8CE2B8A17D300676F6F /* Favorites */,
+				4BA7D9052B8A8A1900676F6F /* Checkout */,
 				4B0AF4112B89332700F68A8F /* Interfaces */,
 			);
 			path = Screens;

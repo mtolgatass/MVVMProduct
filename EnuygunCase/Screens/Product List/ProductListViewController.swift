@@ -35,7 +35,6 @@ class ProductListViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         title = ""
     }
     
@@ -66,6 +65,14 @@ class ProductListViewController: UIViewController {
             .subscribe(onNext: { query in
                 vm.searchTextDidChange(query)
             }).disposed(by: bag)
+        
+        pr.filterButton.rx.tap.subscribe { _ in
+            print("FILTER PRESSED") // TODO
+        }.disposed(by: bag)
+        
+        pr.sortButton.rx.tap.subscribe { _ in
+            print("SORT PRESSED") // TODO
+        }.disposed(by: bag)
     }
 }
 
