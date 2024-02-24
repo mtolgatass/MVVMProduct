@@ -15,10 +15,14 @@ class ProductListViewController: UIViewController {
     private var vm: ProductListViewModel?
     private let bag = DisposeBag()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = "Home"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = ""
         
         addObservationListener()
         pr?.addSubviews(targetView: self.view)
@@ -27,6 +31,12 @@ class ProductListViewController: UIViewController {
         bindViewModel()
         
         vm?.getProductList()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        title = ""
     }
     
     private func bindViewModel() {
