@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "4FE7C293-F05B-4A43-ADF6-1B860440AE10",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:EnuygunCase.xcodeproj",
+      "identifier" : "4B0AF3BD2B89292100F68A8F",
+      "name" : "EnuygunCase"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:EnuygunCase.xcodeproj",
+        "identifier" : "4B0AF3D32B89292300F68A8F",
+        "name" : "EnuygunCaseTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:EnuygunCase.xcodeproj",
+        "identifier" : "4B0AF3DD2B89292300F68A8F",
+        "name" : "EnuygunCaseUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

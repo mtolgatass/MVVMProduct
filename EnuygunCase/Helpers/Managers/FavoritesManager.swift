@@ -43,6 +43,10 @@ class FavoritesManager {
         return favoritesSubject.asObservable()
     }
     
+    func resetFavorites() {
+        saveFavorites([])
+    }
+    
     private func currentFavorites() -> [Product] {
         do {
             if let favoritesData = UserDefaults.standard.data(forKey: favoritesKey) {

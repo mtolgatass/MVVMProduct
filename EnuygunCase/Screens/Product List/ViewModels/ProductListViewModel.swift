@@ -77,7 +77,7 @@ final class ProductListViewModelImpl: ProductListViewModel {
         }
     }
     
-    private func resetProductList() {
+    func resetProductList() {
         productList.accept(initialProductList.value)
     }
 }

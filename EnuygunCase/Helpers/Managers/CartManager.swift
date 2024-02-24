@@ -13,7 +13,7 @@ class CartManager {
     static let shared = CartManager()
     
     private let cartKey = "cart"
-    private var cartSubject = BehaviorRelay<[Product: Int]>(value: [:])
+    var cartSubject = BehaviorRelay<[Product: Int]>(value: [:])
     
     var cart: Observable<[Product: Int]> {
         return cartSubject.asObservable()
