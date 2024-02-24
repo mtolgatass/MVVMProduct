@@ -33,6 +33,7 @@
 		4B4076CC2B893C41006B4F4B /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4B4076CB2B893C41006B4F4B /* RxSwift */; };
 		4B4076CF2B893F41006B4F4B /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B4076CE2B893F41006B4F4B /* ProductTableViewCell.swift */; };
 		4B4076D12B894209006B4F4B /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4B4076D02B894209006B4F4B /* RxCocoa */; };
+		4B82CB582B89620100934BEC /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B82CB572B89620100934BEC /* UIImageViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		4B4076C62B8939FF006B4F4B /* ProductScreenBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductScreenBuilder.swift; sourceTree = "<group>"; };
 		4B4076C82B893B25006B4F4B /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		4B4076CE2B893F41006B4F4B /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
+		4B82CB572B89620100934BEC /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 				4B0AF3CA2B89292300F68A8F /* Assets.xcassets */,
 				4B0AF3C12B89292100F68A8F /* AppDelegate.swift */,
 				4B4076C82B893B25006B4F4B /* AlertManager.swift */,
+				4B82CB572B89620100934BEC /* UIImageViewExtensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				4B4076C72B8939FF006B4F4B /* ProductScreenBuilder.swift in Sources */,
 				4B0AF4062B892DA300F68A8F /* CommonModels.swift in Sources */,
 				4B0AF40E2B89303200F68A8F /* ProductSearchResponseModel.swift in Sources */,
+				4B82CB582B89620100934BEC /* UIImageViewExtensions.swift in Sources */,
 				4B0AF4102B8930E900F68A8F /* ProductListViewModel.swift in Sources */,
 				4B0AF3FD2B892B4100F68A8F /* NetworkManager.swift in Sources */,
 				4B0AF3F52B892ACF00F68A8F /* ProductListViewController.swift in Sources */,

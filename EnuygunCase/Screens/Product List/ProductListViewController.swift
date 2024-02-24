@@ -40,6 +40,16 @@ class ProductListViewController: UIViewController, UITableViewDelegate {
             print(item)
         }).disposed(by: bag)
         vm.getProductList()
+        
+        vm.productList
+            .map { $0.count }
+            .map { "(\($0) adet)" }
+            .bind(to: pr.productCountLabel.rx.text)
+            .disposed(by: bag)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
 

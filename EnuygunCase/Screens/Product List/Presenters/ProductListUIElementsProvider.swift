@@ -11,15 +11,25 @@ import SnapKit
 protocol ProductListUIElementsProvider {
     var stateClosure: ((ObservationType<ProductListUIElementsProviderImpl.UserActivity, Error>) -> ())? { get set }
     var tableView: UITableView { get }
+    var productCountLabel: UILabel { get }
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
 }
 
 final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsProvider {
     var stateClosure: ((ObservationType<UserActivity, Error>) -> ())?
+    
     private var containerStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
+        return stack
+    }()
+    
+    private var labelContainerStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fill
+        stack.spacing = 4
         return stack
     }()
     
@@ -31,16 +41,35 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
         return label
     }()
     
+    var productCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textAlignment = .left
+        label.textColor = .lightGray
+        return label
+    }()
+    
+    private var emptyView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(ProductTableViewCell.self, forCellReuseIdentifier: "ProductTableViewCell")
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(UINib(nibName: "ProductTableViewCell", bundle: nil), forCellReuseIdentifier: "ProductTableViewCell")
         return tableView
     }()
     
     func addSubviews(targetView: UIView) {
         targetView.addSubview(containerStack)
-        containerStack.addArrangedSubview(productsLabel)
+        containerStack.addArrangedSubview(labelContainerStack)
         containerStack.addArrangedSubview(tableView)
+        
+        labelContainerStack.addArrangedSubview(productsLabel)
+        labelContainerStack.addArrangedSubview(productCountLabel)
+        labelContainerStack.addArrangedSubview(emptyView)
     }
     
     func addConstraints(targetView: UIView) {
@@ -52,14 +81,8 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
         }
         
         tableView.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.9)
+            make.height.equalToSuperview().multipliedBy(0.92)
         }
-    }
-}
-
-extension ProductListUIElementsProviderImpl: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
     }
 }
 
