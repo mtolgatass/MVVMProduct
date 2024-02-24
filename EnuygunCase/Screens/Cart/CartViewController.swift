@@ -39,6 +39,7 @@ class CartViewController: UIViewController {
     private func bindViewModel() {
         guard let pr = pr, let vm = vm else { return }
         
+        // Cell For Row At
         vm.getCartItems().bind(to: pr.tableView.rx
             .items(cellIdentifier: "CartTableViewCell", cellType: CartTableViewCell.self)) { (row, item, cell) in
             cell.increaseButton.rx
@@ -62,16 +63,19 @@ class CartViewController: UIViewController {
             cell.configureCell(item.key, item.value)
         }.disposed(by: bag)
         
+        // Total Price
         vm.getTotalPrice()
             .subscribe(onNext: { price in
             pr.priceLabel.text = "Total Price: \(Int(price))₺"
         }).disposed(by: bag)
         
+        // Total Discount
         vm.getTotalDiscount()
             .subscribe(onNext: { price in
             pr.discountedPriceLabel.text = "Discount: \(Int(price))₺"
         }).disposed(by: bag)
         
+        // Total Final Price
         Observable.combineLatest(vm.getTotalPrice(), vm.getTotalDiscount())
             .subscribe(onNext: { price, discount in
             pr.totalPriceLabel.text = "Total Price: \(Int(price - discount))₺"
@@ -81,11 +85,6 @@ class CartViewController: UIViewController {
     private func bindUIProvider() {
         guard let pr = pr else { return }
         pr.tableView.rx.setDelegate(self).disposed(by: bag)
-        
-        pr.tableView.rx.modelSelected(Product.self).subscribe(onNext: { item in
-            let productDetailVC = ProductDetailBuilderImpl().build(product: item)
-            self.present(productDetailVC, animated: true)
-        }).disposed(by: bag)
     }
 }
 

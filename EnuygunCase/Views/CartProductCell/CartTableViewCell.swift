@@ -28,8 +28,7 @@ class CartTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        // Initialization code
+        selectionStyle = .none
     }
     
     func configureCell(_ model: Product, _ count: Int) {
@@ -38,9 +37,9 @@ class CartTableViewCell: UITableViewCell {
         
         if model.discountPercentage > 0 {
             let discountedPrice = Double(model.price) - (Double(model.price) * model.discountPercentage / 100)
-            let priceText = "\(Int(discountedPrice)) TL "
+            let priceText = " \(Int(discountedPrice)) TL"
             let attributePriceString: NSMutableAttributedString =  NSMutableAttributedString(string: priceText)
-            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: " \(model.price) TL")
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "\(model.price) TL")
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
             attributeString.append(attributePriceString)
             productPrice.attributedText = attributeString
