@@ -18,6 +18,7 @@ class CartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        tabBarController?.tabBar.isHidden = false
         title = "Cart"
     }
     

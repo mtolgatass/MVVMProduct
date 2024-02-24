@@ -8,11 +8,14 @@
 import Foundation
 import UIKit
 import SnapKit
+import Lottie
 
 protocol CheckoutUIElementsProvider {
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
+    func showSuccessView()
     var payButton: UIButton { get }
+    var goBackButton: UIButton { get }
     var nameTextField: UITextField { get }
     var emailTextField: UITextField { get }
     var phoneTextField: UITextField { get }
@@ -69,6 +72,52 @@ final class CheckoutUIElementsProviderImpl: CheckoutUIElementsProvider {
         return button
     }()
     
+    // Success View
+    private var successStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.backgroundColor = .black
+        stack.spacing = 8
+        stack.isHidden = true
+        return stack
+    }()
+    
+    private var emptyViewTwo: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private var paymentSuccessLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Payment is successful!"
+        label.textAlignment = .center
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        return label
+    }()
+    
+    private var lottieContainer: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private var lottieView: LottieAnimationView = {
+        let view = LottieAnimationView()
+        view.animation = LottieAnimation.named("mobile-payment")
+        view.loopMode = .loop
+        view.animationSpeed = 0.75
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    var goBackButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Go Back", for: .normal)
+        button.backgroundColor = .systemGreen
+        button.layer.cornerRadius = 8
+        return button
+    }()
+    
     func addSubviews(targetView: UIView) {
         targetView.addSubview(containerStack)
         containerStack.addArrangedSubview(nameTextField)
@@ -76,6 +125,14 @@ final class CheckoutUIElementsProviderImpl: CheckoutUIElementsProvider {
         containerStack.addArrangedSubview(phoneTextField)
         containerStack.addArrangedSubview(emptyView)
         containerStack.addArrangedSubview(payButton)
+        
+        // Success View
+        targetView.addSubview(successStack)
+        successStack.addArrangedSubview(emptyViewTwo)
+        successStack.addArrangedSubview(paymentSuccessLabel)
+        successStack.addArrangedSubview(lottieContainer)
+        lottieContainer.addSubview(lottieView)
+        successStack.addArrangedSubview(goBackButton)
     }
     
     func addConstraints(targetView: UIView) {
@@ -101,13 +158,34 @@ final class CheckoutUIElementsProviderImpl: CheckoutUIElementsProvider {
         payButton.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
+        
+        // Success View
+        successStack.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(targetView.safeAreaLayoutGuide.snp.top)
+            make.bottom.equalTo(targetView.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        emptyViewTwo.snp.makeConstraints { make in
+            make.height.equalTo(20)
+        }
+        
+        paymentSuccessLabel.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
+        
+        lottieView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        goBackButton.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
     }
-}
-
-extension UITextField {
-    func setLeftPaddingPoints(_ amount:CGFloat){
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
-        self.leftView = paddingView
-        self.leftViewMode = .always
+    
+    func showSuccessView() {
+        containerStack.isHidden = true
+        successStack.isHidden = false
+        lottieView.play()
     }
 }

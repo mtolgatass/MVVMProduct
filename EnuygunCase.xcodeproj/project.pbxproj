@@ -56,9 +56,12 @@
 		4BA7D9042B8A4D2900676F6F /* CartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BA7D9022B8A4D2900676F6F /* CartTableViewCell.xib */; };
 		4BA7D90B2B8A8A5F00676F6F /* CheckoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D90A2B8A8A5F00676F6F /* CheckoutUseCase.swift */; };
 		4BA7D90D2B8A8ACD00676F6F /* CheckoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D90C2B8A8ACD00676F6F /* CheckoutViewModel.swift */; };
-		4BA7D90F2B8A8B3000676F6F /* CheckUIElementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D90E2B8A8B3000676F6F /* CheckUIElementsProvider.swift */; };
+		4BA7D90F2B8A8B3000676F6F /* CheckoutUIElementsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D90E2B8A8B3000676F6F /* CheckoutUIElementsProvider.swift */; };
 		4BA7D9112B8A8C7A00676F6F /* CheckoutBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D9102B8A8C7A00676F6F /* CheckoutBuilder.swift */; };
 		4BA7D9132B8A8CA500676F6F /* CheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D9122B8A8CA500676F6F /* CheckoutViewController.swift */; };
+		4BA7D9162B8A9DFA00676F6F /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 4BA7D9152B8A9DFA00676F6F /* Lottie */; };
+		4BA7D9182B8A9E5000676F6F /* mobile-payment.json in Resources */ = {isa = PBXBuildFile; fileRef = 4BA7D9172B8A9E5000676F6F /* mobile-payment.json */; };
+		4BA7D91B2B8AA20B00676F6F /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7D91A2B8AA20B00676F6F /* UITextFieldExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,9 +132,11 @@
 		4BA7D9022B8A4D2900676F6F /* CartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CartTableViewCell.xib; sourceTree = "<group>"; };
 		4BA7D90A2B8A8A5F00676F6F /* CheckoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutUseCase.swift; sourceTree = "<group>"; };
 		4BA7D90C2B8A8ACD00676F6F /* CheckoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewModel.swift; sourceTree = "<group>"; };
-		4BA7D90E2B8A8B3000676F6F /* CheckUIElementsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUIElementsProvider.swift; sourceTree = "<group>"; };
+		4BA7D90E2B8A8B3000676F6F /* CheckoutUIElementsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutUIElementsProvider.swift; sourceTree = "<group>"; };
 		4BA7D9102B8A8C7A00676F6F /* CheckoutBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutBuilder.swift; sourceTree = "<group>"; };
 		4BA7D9122B8A8CA500676F6F /* CheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutViewController.swift; sourceTree = "<group>"; };
+		4BA7D9172B8A9E5000676F6F /* mobile-payment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mobile-payment.json"; sourceTree = "<group>"; };
+		4BA7D91A2B8AA20B00676F6F /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +147,7 @@
 				4B4076D12B894209006B4F4B /* RxCocoa in Frameworks */,
 				4B4076CC2B893C41006B4F4B /* RxSwift in Frameworks */,
 				4B4076C52B893983006B4F4B /* SnapKit in Frameworks */,
+				4BA7D9162B8A9DFA00676F6F /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,13 +231,12 @@
 		4B0AF3F22B892A9100F68A8F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4BA7D91C2B8AA21F00676F6F /* Managers */,
+				4BA7D9192B8AA1F900676F6F /* Extensions */,
 				4B0AF3CA2B89292300F68A8F /* Assets.xcassets */,
+				4BA7D9172B8A9E5000676F6F /* mobile-payment.json */,
 				4B0AF3C12B89292100F68A8F /* AppDelegate.swift */,
-				4B4076C82B893B25006B4F4B /* AlertManager.swift */,
-				4B82CB572B89620100934BEC /* UIImageViewExtensions.swift */,
 				4BA7D8CC2B8A158E00676F6F /* TabBarViewController.swift */,
-				4BA7D8D62B8A19CD00676F6F /* FavoritesManager.swift */,
-				4BA7D8EF2B8A3EF700676F6F /* CartManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -520,7 +525,7 @@
 		4BA7D9082B8A8A2700676F6F /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				4BA7D90E2B8A8B3000676F6F /* CheckUIElementsProvider.swift */,
+				4BA7D90E2B8A8B3000676F6F /* CheckoutUIElementsProvider.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -531,6 +536,25 @@
 				4BA7D90C2B8A8ACD00676F6F /* CheckoutViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4BA7D9192B8AA1F900676F6F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4BA7D91A2B8AA20B00676F6F /* UITextFieldExtensions.swift */,
+				4B82CB572B89620100934BEC /* UIImageViewExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4BA7D91C2B8AA21F00676F6F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4B4076C82B893B25006B4F4B /* AlertManager.swift */,
+				4BA7D8EF2B8A3EF700676F6F /* CartManager.swift */,
+				4BA7D8D62B8A19CD00676F6F /* FavoritesManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -553,6 +577,7 @@
 				4B4076C42B893983006B4F4B /* SnapKit */,
 				4B4076CB2B893C41006B4F4B /* RxSwift */,
 				4B4076D02B894209006B4F4B /* RxCocoa */,
+				4BA7D9152B8A9DFA00676F6F /* Lottie */,
 			);
 			productName = EnuygunCase;
 			productReference = 4B0AF3BE2B89292100F68A8F /* EnuygunCase.app */;
@@ -629,6 +654,7 @@
 			packageReferences = (
 				4B0AF3F12B892A3E00F68A8F /* XCRemoteSwiftPackageReference "RxSwift" */,
 				4B0AF4172B89387800F68A8F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4BA7D9142B8A9DFA00676F6F /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = 4B0AF3BF2B89292100F68A8F /* Products */;
 			projectDirPath = "";
@@ -650,6 +676,7 @@
 				4B05AB222B894FE100A6562D /* ProductTableViewCell.xib in Resources */,
 				4B0AF3CB2B89292300F68A8F /* Assets.xcassets in Resources */,
 				4BA7D9042B8A4D2900676F6F /* CartTableViewCell.xib in Resources */,
+				4BA7D9182B8A9E5000676F6F /* mobile-payment.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,7 +721,7 @@
 				4BA7D8E42B8A1BD100676F6F /* ProductDetailUIElementsProvider.swift in Sources */,
 				4B0AF4032B892C5A00F68A8F /* ProductListService.swift in Sources */,
 				4BA7D8E02B8A1B3000676F6F /* ProductDetailUseCase.swift in Sources */,
-				4BA7D90F2B8A8B3000676F6F /* CheckUIElementsProvider.swift in Sources */,
+				4BA7D90F2B8A8B3000676F6F /* CheckoutUIElementsProvider.swift in Sources */,
 				4BA7D8CD2B8A158E00676F6F /* TabBarViewController.swift in Sources */,
 				4BA7D90D2B8A8ACD00676F6F /* CheckoutViewModel.swift in Sources */,
 				4BA7D9032B8A4D2900676F6F /* CartTableViewCell.swift in Sources */,
@@ -710,6 +737,7 @@
 				4B0AF4012B892BA800F68A8F /* Endpoint.swift in Sources */,
 				4BA7D9132B8A8CA500676F6F /* CheckoutViewController.swift in Sources */,
 				4BA7D8D52B8A183000676F6F /* FavoritesViewController.swift in Sources */,
+				4BA7D91B2B8AA20B00676F6F /* UITextFieldExtensions.swift in Sources */,
 				4B0AF40C2B892E8900F68A8F /* SearchProductService.swift in Sources */,
 				4BA7D8E62B8A203D00676F6F /* ProductDetailBuilder.swift in Sources */,
 				4BA7D8F02B8A3EF700676F6F /* CartManager.swift in Sources */,
@@ -1074,6 +1102,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		4BA7D9142B8A9DFA00676F6F /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1091,6 +1127,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4B0AF3F12B892A3E00F68A8F /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;
+		};
+		4BA7D9152B8A9DFA00676F6F /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BA7D9142B8A9DFA00676F6F /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -20,6 +20,7 @@ class CheckoutViewController: UIViewController {
         view.backgroundColor = .systemBackground
         title = "Checkout"
         navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
         
         pr?.addSubviews(targetView: self.view)
         pr?.addConstraints(targetView: self.view)
@@ -34,11 +35,20 @@ class CheckoutViewController: UIViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self = self else { return }
                 if self.checkInputFields() {
-                    print("PAY")
+                    pr.showSuccessView()
+                    vm?.emptyCart()
+                    print("Payment successful")
                 } else {
                     AlertManager.showError(title: "Error", message: "Please check input fields", controller: self)
                 }
             }).disposed(by: bag)
+        
+        pr.goBackButton.rx
+            .tap
+            .subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.navigationController?.popViewController(animated: true)
+        }).disposed(by: bag)
     }
     
     private func checkInputFields() -> Bool {
