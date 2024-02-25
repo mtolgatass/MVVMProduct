@@ -49,6 +49,11 @@ class ProductListViewController: UIViewController {
         vm.productList.bind(to: pr.tableView.rx.items(cellIdentifier: "ProductTableViewCell", cellType: ProductTableViewCell.self)) { (row, item, cell) in
             cell.configureCell(item)
         }.disposed(by: bag)
+        
+        vm.searchActive.subscribe(onNext: { _ in
+            pr.setFilterState(isActive: false)
+            pr.setSortState(isActive: false)
+        }).disposed(by: bag)
     }
     
     private func bindUIProvider() {

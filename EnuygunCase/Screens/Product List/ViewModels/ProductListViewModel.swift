@@ -13,6 +13,7 @@ protocol ProductListViewModel {
     var stateClosure: ((ObservationType<NetworkError>) -> ())? { get set }
     var productList: BehaviorRelay<[Product]> { get }
     var initialProductList: BehaviorRelay<[Product]> { get }
+    var searchActive: BehaviorRelay<Bool> { get }
     func getProductList()
     func searchTextDidChange(_ query: String)
     func resetProductList()
@@ -26,9 +27,12 @@ final class ProductListViewModelImpl: ProductListViewModel {
     
     let productList = BehaviorRelay<[Product]>(value: [])
     let initialProductList = BehaviorRelay<[Product]>(value: [])
+    private let searchResults = BehaviorRelay<[Product]>(value: [])
     
     private let disposeBag = DisposeBag()
     private let searchThrottle = PublishSubject<String>()
+    
+    var searchActive = BehaviorRelay<Bool>(value: false)
     
     init(productListUseCase: ProductListUseCase) {
         self.productListUseCase = productListUseCase
@@ -59,8 +63,10 @@ final class ProductListViewModelImpl: ProductListViewModel {
             .subscribe(onNext: { [weak self] query in
                 guard let self = self else { return }
                 if query.count < 3 {
+                    self.searchActive.accept(false)
                     self.resetProductList()
                 } else {
+                    self.searchActive.accept(true)
                     self.searchProduct(query)
                 }
             })
@@ -73,6 +79,7 @@ final class ProductListViewModelImpl: ProductListViewModel {
             switch result {
             case .success(let response):
                 let searchResults = response.products
+                self.searchResults.accept(searchResults)
                 productList.accept(searchResults)
             case .failure(let error):
                 stateClosure?(.error(error: error))
@@ -84,8 +91,15 @@ final class ProductListViewModelImpl: ProductListViewModel {
         productList.accept(initialProductList.value)
     }
     
+    func resetSearchResult() {
+        productList.accept(searchResults.value)
+    }
+    
     func filterProductList(_ filterType: ProductListFilterType) {
+        searchActive.value ?
+        resetSearchResult() :
         resetProductList()
+        
         switch filterType {
         case .priceRange(let min, let max):
             let filteredList = productList.value.filter { $0.price >= min && $0.price <= max }
@@ -94,6 +108,8 @@ final class ProductListViewModelImpl: ProductListViewModel {
     }
     
     func sortProductList(_ sortType: ProductListSortType) {
+        searchActive.value ?
+        resetSearchResult() :
         resetProductList()
         switch sortType {
         case .priceAsc:
