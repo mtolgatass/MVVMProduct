@@ -64,7 +64,7 @@ class CheckoutViewController: UIViewController {
             pr?.emailTextField.layer.borderColor = UIColor.red.cgColor
             result = false
         } else {
-            pr?.nameTextField.layer.borderColor = UIColor.systemGray.cgColor
+            pr?.emailTextField.layer.borderColor = UIColor.systemGray.cgColor
         }
         
         if pr?.phoneTextField.text?.count ?? 0 < 3 {

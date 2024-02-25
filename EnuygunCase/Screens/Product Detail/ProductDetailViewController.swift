@@ -24,7 +24,13 @@ class ProductDetailViewController: UIViewController {
         
         guard let vm = vm else { return }
         pr?.configureUI(product: vm.getProduct(), isFavorite: vm.getFavoriteStatus())
+        
         bindGestures()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let vm = vm else { return }
+        pr?.configureScrollView(vm.getProduct().images)
     }
     
     private func bindGestures() {

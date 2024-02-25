@@ -430,9 +430,9 @@
 			isa = PBXGroup;
 			children = (
 				4BA7D8DC2B8A1AEE00676F6F /* ProductDetailViewController.swift */,
-				4BA7D8DE2B8A1B0C00676F6F /* UseCases */,
-				4BA7D8DB2B8A1ACB00676F6F /* ViewModels */,
 				4BA7D8DA2B8A1AC500676F6F /* Presenters */,
+				4BA7D8DB2B8A1ACB00676F6F /* ViewModels */,
+				4BA7D8DE2B8A1B0C00676F6F /* UseCases */,
 				4BA7D8D92B8A1AC200676F6F /* Builders */,
 			);
 			path = "Product Detail";

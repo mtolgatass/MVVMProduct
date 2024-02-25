@@ -13,13 +13,14 @@ protocol ProductDetailUIElementsProvider {
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
     func configureUI(product: Product, isFavorite: Bool)
+    func configureScrollView(_ bannerInfo: [URL])
     func setFavoriteButton(isFavorite: Bool)
     func updateCartButton()
     var favoriteButton: UIButton { get }
     var cartButton: UIButton { get }
 }
 
-final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider {
+final class ProductDetailUIElementsProviderImpl: NSObject, ProductDetailUIElementsProvider {
     
     private var containerStack: UIStackView = {
         let stack = UIStackView()
@@ -33,10 +34,24 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
         return view
     }()
     
-    private var productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isPagingEnabled = true
+        scrollView.delegate = self
+        return scrollView
+    }()
+    
+    private lazy var pageControl: UIPageControl = {
+        let control = UIPageControl()
+        control.backgroundColor = .clear
+        control.currentPageIndicatorTintColor = .systemGray
+        control.isUserInteractionEnabled = false
+        control.pageIndicatorTintColor = .white
+        control.backgroundColor = .clear
+        return control
     }()
     
     private var productTitleLabel: UILabel = {
@@ -106,6 +121,8 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
         return label
     }()
     
+    private var bannerCount: Int = 0
+    
     func addSubviews(targetView: UIView) {
         targetView.addSubview(containerStack)
         containerStack.addArrangedSubview(imageContainerView)
@@ -114,7 +131,8 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
         containerStack.addArrangedSubview(productDescriptionLabel)
         containerStack.addArrangedSubview(emptyView)
         
-        imageContainerView.addSubview(productImageView)
+        imageContainerView.addSubview(scrollView)
+        imageContainerView.addSubview(pageControl)
         imageContainerView.addSubview(discountCircle)
         discountCircle.addSubview(discountLabel)
         
@@ -135,8 +153,14 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
             make.height.equalToSuperview().multipliedBy(0.3)
         }
         
-        productImageView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        pageControl.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(8)
+            make.height.equalTo(30)
         }
         
         discountCircle.snp.makeConstraints { make in
@@ -162,19 +186,62 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
     }
     
     func configureUI(product: Product, isFavorite: Bool) {
-        productImageView.loadImage(from: product.images.first ?? URL(fileURLWithPath: ""))
+        configureScrollView(product.images)
         productTitleLabel.text = product.title
-        productPriceLabel.text = "\(product.price) TL"
         productDescriptionLabel.text = product.description
         if product.discountPercentage != 0 {
             discountLabel.text = "-\(Int(product.discountPercentage))%"
+            
+            let discountedPrice = Double(product.price) - (Double(product.price) * product.discountPercentage / 100)
+            
+            let discountedAttributedString: NSMutableAttributedString =  NSMutableAttributedString(string: " \(Int(discountedPrice)) TL")
+            discountedAttributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: 16), range: NSMakeRange(0, discountedAttributedString.length))
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: "\(product.price) TL")
+            
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+            attributeString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.gray, range: NSMakeRange(0, attributeString.length))
+            attributeString.append(discountedAttributedString)
+            productPriceLabel.attributedText = attributeString
         } else {
+            productPriceLabel.text = "\(product.price) TL"
             discountCircle.isHidden = true
         }
         
         if isFavorite {
             favoriteButton.setImage(UIImage(named: "FavoriteIconFilled"), for: .normal)
         }
+    }
+    
+    func configureScrollView(_ bannerInfo: [URL]) {
+        guard !bannerInfo.isEmpty else {
+            setupEmptyState()
+            return
+        }
+        
+        bannerCount = bannerInfo.count
+        
+        for x in 0..<bannerInfo.count {
+            addBannerImageView(bannerInfo[x], at: CGFloat(x) * scrollView.frame.size.width)
+        }
+        
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(bannerCount), height: scrollView.frame.size.height)
+        scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
+        
+        pageControl.numberOfPages = bannerCount
+        pageControl.currentPage = 0
+    }
+    
+    private func setupEmptyState() {
+        let emptyImageView = UIImageView(frame: .zero)
+        emptyImageView.image = UIImage(named: "")
+        scrollView.addSubview(emptyImageView)
+    }
+    
+    private func addBannerImageView(_ banner: URL, at positionX: CGFloat) {
+        let bannerImageView = UIImageView(frame: CGRect(x: positionX, y: 0, width: scrollView.frame.size.width, height: scrollView.frame.size.height))
+        bannerImageView.contentMode = .scaleAspectFit
+        bannerImageView.loadImage(from: banner)
+        scrollView.addSubview(bannerImageView)
     }
     
     func setFavoriteButton(isFavorite: Bool) {
@@ -184,5 +251,12 @@ final class ProductDetailUIElementsProviderImpl: ProductDetailUIElementsProvider
     func updateCartButton() {
         cartButton.setTitle("Added to Cart", for: .normal)
         cartButton.backgroundColor = .systemGreen
+    }
+}
+
+extension ProductDetailUIElementsProviderImpl: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let currentPage:Int = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        pageControl.currentPage = currentPage % bannerCount
     }
 }
