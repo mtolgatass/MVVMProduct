@@ -66,13 +66,41 @@ class ProductListViewController: UIViewController {
                 vm.searchTextDidChange(query)
             }).disposed(by: bag)
         
-        pr.filterButton.rx.tap.subscribe { _ in
-            print("FILTER PRESSED") // TODO
-        }.disposed(by: bag)
+        pr.filterButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.showFilterAlert()
+        }).disposed(by: bag)
         
-        pr.sortButton.rx.tap.subscribe { _ in
-            print("SORT PRESSED") // TODO
-        }.disposed(by: bag)
+        pr.sortButton.rx.tap.subscribe(onNext: { [weak self] in
+            guard let self = self else { return }
+            self.showSortAlert()
+        }).disposed(by: bag)
+    }
+    
+    private func showFilterAlert() {
+        AlertManager.showFilterAlert(
+            action: { [weak self] filterType in
+                guard let self = self else { return }
+                self.vm?.filterProductList(filterType)
+                self.pr?.setFilterState(isActive: true)
+            }, cancelAction: { [weak self] in
+                guard let self = self else { return }
+                self.vm?.resetProductList()
+                self.pr?.setFilterState(isActive: false)
+            }, controller: self)
+    }
+    
+    private func showSortAlert() {
+        AlertManager.showSortAlert(
+            action: { [weak self] sortType in
+                guard let self = self else { return }
+                self.vm?.sortProductList(sortType)
+                self.pr?.setSortState(isActive: true)
+            }, cancelAction: { [weak self] in
+                guard let self = self else { return }
+                self.vm?.resetProductList()
+                self.pr?.setSortState(isActive: false)
+            }, controller: self)
     }
 }
 

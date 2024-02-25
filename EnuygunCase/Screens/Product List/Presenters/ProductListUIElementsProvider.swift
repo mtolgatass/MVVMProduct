@@ -16,6 +16,8 @@ protocol ProductListUIElementsProvider {
     var sortButton: UIButton { get }
     func addSubviews(targetView: UIView)
     func addConstraints(targetView: UIView)
+    func setFilterState(isActive: Bool)
+    func setSortState(isActive: Bool)
 }
 
 final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsProvider {
@@ -137,5 +139,15 @@ final class ProductListUIElementsProviderImpl: NSObject, ProductListUIElementsPr
         tableView.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.85)
         }
+    }
+    
+    func setFilterState(isActive: Bool) {
+        let color = isActive ? UIColor.systemBlue : UIColor.systemGray
+        filterButton.tintColor = color
+    }
+    
+    func setSortState(isActive: Bool) {
+        let color = isActive ? UIColor.systemBlue : UIColor.systemGray
+        sortButton.tintColor = color
     }
 }

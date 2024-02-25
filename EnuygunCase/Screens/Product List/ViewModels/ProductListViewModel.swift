@@ -15,6 +15,9 @@ protocol ProductListViewModel {
     var initialProductList: BehaviorRelay<[Product]> { get }
     func getProductList()
     func searchTextDidChange(_ query: String)
+    func resetProductList()
+    func filterProductList(_ filterType: ProductListFilterType)
+    func sortProductList(_ sortType: ProductListSortType)
 }
 
 final class ProductListViewModelImpl: ProductListViewModel {
@@ -79,5 +82,32 @@ final class ProductListViewModelImpl: ProductListViewModel {
     
     func resetProductList() {
         productList.accept(initialProductList.value)
+    }
+    
+    func filterProductList(_ filterType: ProductListFilterType) {
+        resetProductList()
+        switch filterType {
+        case .priceRange(let min, let max):
+            let filteredList = productList.value.filter { $0.price >= min && $0.price <= max }
+            productList.accept(filteredList)
+        }
+    }
+    
+    func sortProductList(_ sortType: ProductListSortType) {
+        resetProductList()
+        switch sortType {
+        case .priceAsc:
+            let sortedList = productList.value.sorted { $0.price < $1.price }
+            productList.accept(sortedList)
+        case .priceDesc:
+            let sortedList = productList.value.sorted { $0.price > $1.price }
+            productList.accept(sortedList)
+        case .titleAsc:
+            let sortedList = productList.value.sorted { $0.title < $1.title }
+            productList.accept(sortedList)
+        case .titleDesc:
+            let sortedList = productList.value.sorted { $0.title > $1.title }
+            productList.accept(sortedList)
+        }
     }
 }

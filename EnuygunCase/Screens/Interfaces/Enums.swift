@@ -10,3 +10,14 @@ import Foundation
 enum ObservationType<E> {
     case error(error: E?)
 }
+
+enum ProductListFilterType {
+    case priceRange(min: Int, max: Int)
+}
+
+enum ProductListSortType {
+    case priceAsc
+    case priceDesc
+    case titleAsc
+    case titleDesc
+}
